@@ -41,6 +41,11 @@ interface TeamData {
 
 const teamData = teamDataRaw as unknown as TeamData;
 
+// Helper function to ensure proper typing
+function ensureTeamMember(member: unknown): TeamMember {
+  return member as TeamMember;
+}
+
 export const metadata: Metadata = {
   title: "Team - UOR Foundation",
   description:
@@ -168,7 +173,10 @@ export default function TeamPage() {
           description={teamData.description}
         />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {teamData.members.map((member: TeamMember) => (
+          {teamData.members.map((memberRaw) => {
+            const member = ensureTeamMember(memberRaw);
+            const social = member.social as TeamMember['social'];
+            return (
             <Card key={member.name} className="flex flex-col hover:border-purple/20 hover:shadow-sm hover:shadow-transparent">
               <CardHeader className="space-y-4">
                 <div className="relative aspect-square w-full overflow-hidden rounded-lg">
@@ -205,9 +213,9 @@ export default function TeamPage() {
                   ))}
                 </div>
                 <div className="mt-auto pt-4 flex gap-3 flex-wrap">
-                  {member.social.youtube && (
+                  {social.youtube && (
                     <a
-                      href={member.social.youtube}
+                      href={social.youtube}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan hover:text-cyan/80 transition-colors"
@@ -216,9 +224,9 @@ export default function TeamPage() {
                       <Youtube className="h-5 w-5" />
                     </a>
                   )}
-                  {member.social.instagram && (
+                  {social.instagram && (
                     <a
-                      href={member.social.instagram}
+                      href={social.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan hover:text-cyan/80 transition-colors"
@@ -227,9 +235,9 @@ export default function TeamPage() {
                       <Instagram className="h-5 w-5" />
                     </a>
                   )}
-                  {member.social.twitter && (
+                  {social.twitter && (
                     <a
-                      href={member.social.twitter}
+                      href={social.twitter}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan hover:text-cyan/80 transition-colors"
@@ -238,9 +246,9 @@ export default function TeamPage() {
                       <Twitter className="h-5 w-5" />
                     </a>
                   )}
-                  {member.social.telegram && (
+                  {social.telegram && (
                     <a
-                      href={member.social.telegram}
+                      href={social.telegram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan hover:text-cyan/80 transition-colors"
@@ -249,9 +257,9 @@ export default function TeamPage() {
                       <Send className="h-5 w-5" />
                     </a>
                   )}
-                  {member.social.linkedin && (
+                  {social.linkedin && (
                     <a
-                      href={member.social.linkedin}
+                      href={social.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan hover:text-cyan/80 transition-colors"
@@ -260,9 +268,9 @@ export default function TeamPage() {
                       <Linkedin className="h-5 w-5" />
                     </a>
                   )}
-                  {member.social.github && (
+                  {social.github && (
                     <a
-                      href={member.social.github}
+                      href={social.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan hover:text-cyan/80 transition-colors"
@@ -274,7 +282,8 @@ export default function TeamPage() {
                 </div>
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
       </Section>
 
