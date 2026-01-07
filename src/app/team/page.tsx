@@ -8,14 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Section, SectionHeader } from "@/components/section";
-import teamData from "@/content/en/team.json";
+import teamDataRaw from "@/content/en/team.json";
 import { Sparkles, Globe2, Zap, Code, Youtube, Instagram, Twitter, Send, Linkedin, Github } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Team - UOR Foundation",
-  description:
-    "Meet the team behind UOR Foundation. Researchers, engineers, and innovators building decentralized data infrastructure.",
-};
 
 interface TeamMember {
   name: string;
@@ -33,6 +27,25 @@ interface TeamMember {
     reddit?: string;
   };
 }
+
+interface TeamData {
+  title: string;
+  description: string;
+  members: TeamMember[];
+  joinTeam?: {
+    title: string;
+    description: string;
+    viewPositions: string;
+  };
+}
+
+const teamData = teamDataRaw as TeamData;
+
+export const metadata: Metadata = {
+  title: "Team - UOR Foundation",
+  description:
+    "Meet the team behind UOR Foundation. Researchers, engineers, and innovators building decentralized data infrastructure.",
+};
 
 export default function TeamPage() {
   return (
@@ -155,7 +168,7 @@ export default function TeamPage() {
           description={teamData.description}
         />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {(teamData.members as TeamMember[]).map((member) => (
+          {teamData.members.map((member) => (
             <Card key={member.name} className="flex flex-col hover:border-purple/20 hover:shadow-sm hover:shadow-transparent">
               <CardHeader className="space-y-4">
                 <div className="relative aspect-square w-full overflow-hidden rounded-lg">
