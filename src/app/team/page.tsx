@@ -155,7 +155,7 @@ export default function TeamPage() {
           description={teamData.description}
         />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {teamData.members.map((member) => (
+          {(teamData.members as TeamMember[]).map((member) => (
             <Card key={member.name} className="flex flex-col hover:border-purple/20 hover:shadow-sm hover:shadow-transparent">
               <CardHeader className="space-y-4">
                 <div className="relative aspect-square w-full overflow-hidden rounded-lg">
